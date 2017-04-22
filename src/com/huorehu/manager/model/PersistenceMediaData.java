@@ -52,7 +52,7 @@ public class PersistenceMediaData implements Persistence {
     }
 
     @Override
-    public List<MediaFile> changeStatus(String name) {
+    public List<MediaFile> getMediaByName(String name) {
         List<MediaFile> mediaForChanges = new ArrayList<>();
         for (MediaFile media : mediaList) {
             if (media.getName().equals(name)) {
@@ -68,8 +68,25 @@ public class PersistenceMediaData implements Persistence {
     }
 
     @Override
-    public void deleteMedia(MediaFile media) {
-        // TODO Auto-generated method stub
+    public void deleteMedia(MediaFile mediaDeletable) {
+        List<MediaFile> mediaForRewrite = new ArrayList<>();
+        for (MediaFile media : mediaList) {
+            if (!media.getName().equals(mediaDeletable.getName()) &&
+                    !media.getCategory().equals(mediaDeletable.getCategory())) {
+                mediaForRewrite.add(media);
+            }
+        }
+        mediaList = mediaForRewrite;
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            for (MediaFile media : mediaList) {
+                writer.write(json.toJson(media) + "\n");
+                writer.flush();
+            }
+            writer.close();
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
 
     }
 

@@ -15,6 +15,6 @@ public interface Persistence {
 
     void getMediaByStatus(StatusMedia status);
 
-    List<MediaFile> changeStatus(String name);
+    List<MediaFile> getMediaByName(String name);
 
 }
