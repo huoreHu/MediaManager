@@ -27,7 +27,7 @@ public class Delete implements UserCommand {
         }
 
         UserCommand.persistence.deleteMedia(mediaForChanges.get(mediaNumber));
-        System.out.printf("%s: '%s' was deleted!", mediaForChanges.get(mediaNumber).getCategory(),
+        System.out.printf("%s: '%s' was deleted!\n", mediaForChanges.get(mediaNumber).getCategory(),
                 mediaForChanges.get(mediaNumber).getName());
 
     }

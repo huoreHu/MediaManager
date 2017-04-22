@@ -11,6 +11,7 @@ import com.huorehu.manager.ui.MessageShower;
 public class Status implements UserCommand {
 
     private int tryCount = 0;
+    private int mediaNumber = 0;
 
     public Status(MessageShower shower) {
         // TODO Auto-generated constructor stub
@@ -18,14 +19,15 @@ public class Status implements UserCommand {
 
     @Override
     public void executeCommand(CommandsCatcher catcher) {
-        int mediaNumber = 0;
+        mediaNumber = 0;
         List<MediaFile> mediaForChanges = UserCommand.persistence.getMediaByName(catcher.getFileName());
         if (mediaForChanges.size() > 1) {
             System.out.println("What kind of media change status?");
             for (MediaFile media : mediaForChanges) {
-                System.out.printf("%d. %s: '%s'", mediaNumber + 1, media.getCategory(), media.getName());
+                System.out.printf("%d. %s: '%s'\n", mediaNumber + 1, media.getCategory(), media.getName());
+                mediaNumber++;
             }
-            choiceNumberMedia(catcher, mediaNumber);
+            choiceNumberMedia(catcher);
         }
 
         MediaFile media = mediaForChanges.get(mediaNumber);
@@ -38,11 +40,13 @@ public class Status implements UserCommand {
         choiceStatus(catcher, media);
 
         try {
+            UserCommand.persistence.deleteMedia(media);
             UserCommand.persistence.addMedia(media);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("Status for media %s: %s was changed to %s", mediaForChanges.get(mediaNumber).getCategory(), mediaForChanges.get(mediaNumber).getName(), mediaForChanges.get(mediaNumber).getStatus());
+        System.out.printf("Status for media %s: '%s' was changed to '%s'\n", mediaForChanges.get(mediaNumber).getCategory(),
+                mediaForChanges.get(mediaNumber).getName(), mediaForChanges.get(mediaNumber).getStatus());
 
     }
 
@@ -71,7 +75,7 @@ public class Status implements UserCommand {
         tryCount = 0;
     }
 
-    private void choiceNumberMedia(CommandsCatcher catcher, int mediaNumber) {
+    private void choiceNumberMedia(CommandsCatcher catcher) {
         switch (((ConsoleCommandsCatcher) catcher).getReader().nextInt()) {
         case 1:
             mediaNumber = 0;
@@ -86,7 +90,7 @@ public class Status implements UserCommand {
             System.out.println("Command not found. Try again.");
             if (tryCount < 2) {
                 tryCount++;
-                choiceNumberMedia(catcher, mediaNumber);
+                choiceNumberMedia(catcher);
             }
             if (tryCount == 2) {
                 System.out.println("Exceeded try limit!");

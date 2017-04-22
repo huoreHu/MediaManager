@@ -6,4 +6,6 @@ public interface MessageShower {
 
     void showMainMenu();
 
+    void info();
+
 }

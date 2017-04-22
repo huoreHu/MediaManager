@@ -40,6 +40,8 @@ public class Add implements UserCommand {
 
         try {
             UserCommand.persistence.addMedia(media);
+            System.out.printf("Media %s: '%s' was added to base with status '%s'\n",
+                    media.getCategory(), media.getName(), media.getStatus());
         } catch (IOException e) {
             e.printStackTrace();
         }

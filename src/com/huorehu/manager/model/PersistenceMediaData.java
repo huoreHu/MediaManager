@@ -71,7 +71,7 @@ public class PersistenceMediaData implements Persistence {
     public void deleteMedia(MediaFile mediaDeletable) {
         List<MediaFile> mediaForRewrite = new ArrayList<>();
         for (MediaFile media : mediaList) {
-            if (!media.getName().equals(mediaDeletable.getName()) &&
+            if (!media.getName().equals(mediaDeletable.getName()) ||
                     !media.getCategory().equals(mediaDeletable.getCategory())) {
                 mediaForRewrite.add(media);
             }

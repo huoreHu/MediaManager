@@ -27,7 +27,7 @@ public class UserCommandsBank implements CommandsBank {
 
     private UserCommand getCommand(String command) throws IllegalArgumentException {
         if (null == validateCommand(command)) {
-            throw new IllegalArgumentException("Command not found!");
+            throw new IllegalArgumentException("Illegal inputs!");
         }
         return commandsList.get(command);
     }

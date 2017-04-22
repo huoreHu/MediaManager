@@ -3,8 +3,8 @@ package com.huorehu.manager.controller.commands;
 public enum FateCommand {
 	
 	ADD("add"),
-	STATUS("status"),
-	GETLIST("getlist"),
+	STATUS("changestatus"),
+	GETLIST("getallmedia"),
 	DELETE("delete");
 	
 	private String name;

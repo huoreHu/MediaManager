@@ -11,8 +11,10 @@ public class GetList implements UserCommand {
 
     @Override
     public void executeCommand(CommandsCatcher catcher) {
-        System.out.println(catcher.getFileName() + "@GET_LIST");
-
+        System.out.println("List of all media in base");
+        for (MediaFile media : UserCommand.persistence.getAllMedia()) {
+            System.out.printf("%s: '%s' with status '%s'\n", media.getCategory(), media.getName(), media.getStatus());
+        }
     }
 
 }

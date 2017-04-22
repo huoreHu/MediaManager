@@ -8,6 +8,7 @@ public class ConsoleCommandsCatcher implements CommandsCatcher {
 
     private String commandName;
     private String fileName;
+    private String commandKey;
 
     @Override
     public String getCommandName() {
